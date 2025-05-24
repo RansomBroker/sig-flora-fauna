@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import MapContent from "@/components/MapContent";
+import MapLegend, { defaultFloraLegendItems } from "@/components/MapLegend";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Species } from "@/types/species";
 
 const Habitat = () => {
   const navigate = useNavigate();
+  const [endemicSpecies, setEndemicSpecies] = useState<Species[]>([]);
+
+  const handleEndemicSpeciesChange = (species: Species[]) => {
+    setEndemicSpecies(species);
+  };
 
   return (
     <div className="fixed inset-0">
@@ -27,6 +34,14 @@ const Habitat = () => {
         defaultLng={117.153709}
         defaultZoom={7}
         defaultTileLayer="topo"
+        onEndemicSpeciesChange={handleEndemicSpeciesChange}
+      />
+      <MapLegend
+        title="Legenda Habitat & Spesies"
+        items={defaultFloraLegendItems}
+        position="bottom-right"
+        defaultTileLayer="topo"
+        endemicSpecies={endemicSpecies}
       />
     </div>
   );

@@ -1,5 +1,4 @@
 import React from "react";
-import MainNavigation from "./MainNavigation";
 import { useEffect, useState } from "react";
 import {
   MapContainer,
@@ -20,22 +19,9 @@ import {
   tropisSedang,
   tropisPegunungan,
 } from "../lib/tropis";
+import { Species } from "@/types/species";
 
-type Species = {
-  name: string;
-  type: "floral" | "fauna";
-  image: string;
-  lat: number;
-  lng: number;
-};
-
-type Representative = {
-  name: string;
-  type: "floral" | "fauna";
-  image: string;
-  lat: number;
-  lng: number;
-};
+type Representative = Species;
 
 type ProvinceData = {
   province: string;
@@ -60,15 +46,22 @@ type MapContentProps = {
   defaultLng?: number;
   defaultZoom?: number;
   defaultTileLayer?: "osm" | "satellite" | "hybrid" | "topo";
+  onEndemicSpeciesChange?: (species: Species[]) => void;
 };
 
-const icon = (url: string) =>
+const icon = (url: string, isEndemic?: boolean, type?: "floral" | "fauna") =>
   L.icon({
     iconUrl: url,
     iconSize: [40, 40],
     iconAnchor: [20, 40],
     popupAnchor: [0, -40],
-    className: "rounded-full shadow-lg",
+    className: `rounded-full shadow-lg ${
+      isEndemic
+        ? type === "floral"
+          ? "border-4 border-red-500"
+          : "border-4 border-yellow-500"
+        : ""
+    }`,
   });
 
 const FlyTo = ({
@@ -98,6 +91,7 @@ const MapContent: React.FC<MapContentProps> = ({
   defaultLng = 118.0149,
   defaultZoom = 4,
   defaultTileLayer = "osm",
+  onEndemicSpeciesChange,
 }) => {
   const [data, setData] = useState<ProvinceData[]>([]);
   const [selectedProvince, setSelectedProvince] = useState<ProvinceData | null>(
@@ -118,11 +112,27 @@ const MapContent: React.FC<MapContentProps> = ({
       .then((response) => response.json())
       .then((data) => {
         setData(data);
+        // Extract endemic species and notify parent
+        const endemicSpecies = data.flatMap((province) => [
+          ...province.representatives
+            .filter((rep) => rep.is_endemic)
+            .map((rep) => ({
+              ...rep,
+              province: province.province,
+            })),
+          ...province.data
+            .filter((item) => item.is_endemic)
+            .map((item) => ({
+              ...item,
+              province: province.province,
+            })),
+        ]);
+        onEndemicSpeciesChange?.(endemicSpecies);
       })
       .catch((err) => {
         console.error("Fetch error:", err);
       });
-  }, []);
+  }, [onEndemicSpeciesChange]);
 
   useEffect(() => {
     fetch("/data/polygonIndonesia.geojson")
@@ -254,7 +264,7 @@ const MapContent: React.FC<MapContentProps> = ({
                       <Marker
                         key={`${prov.province}-data-${idx}`}
                         position={[item.lat, item.lng]}
-                        icon={icon(item.image)}
+                        icon={icon(item.image, item.is_endemic, item.type)}
                       >
                         <Popup>
                           <strong>{item.name}</strong>
@@ -262,6 +272,10 @@ const MapContent: React.FC<MapContentProps> = ({
                           Provinsi: {prov.province}
                           <br />
                           Tipe: {item.type}
+                          {item.is_endemic && <br />}
+                          {item.is_endemic && (
+                            <span className="text-red-500">Endemik</span>
+                          )}
                         </Popup>
                       </Marker>
                     ))
@@ -273,7 +287,7 @@ const MapContent: React.FC<MapContentProps> = ({
                       <Marker
                         key={`${prov.province}-rep-${idx}`}
                         position={[rep.lat, rep.lng]}
-                        icon={icon(rep.image)}
+                        icon={icon(rep.image, rep.is_endemic, rep.type)}
                         eventHandlers={{
                           click: () => handleProvinceClick(prov),
                         }}
@@ -282,6 +296,10 @@ const MapContent: React.FC<MapContentProps> = ({
                           <strong>{rep.name}</strong>
                           <br />
                           Provinsi: {prov.province}
+                          {rep.is_endemic && <br />}
+                          {rep.is_endemic && (
+                            <span className="text-red-500">Endemik</span>
+                          )}
                         </Popup>
                       </Marker>
                     ))
@@ -294,12 +312,16 @@ const MapContent: React.FC<MapContentProps> = ({
                   <Marker
                     key={`species-${idx}`}
                     position={[item.lat, item.lng]}
-                    icon={icon(item.image)}
+                    icon={icon(item.image, item.is_endemic, item.type)}
                   >
                     <Popup>
                       <strong>{item.name}</strong>
                       <br />
                       Tipe: {item.type}
+                      {item.is_endemic && <br />}
+                      {item.is_endemic && (
+                        <span className="text-red-500">Endemik</span>
+                      )}
                     </Popup>
                   </Marker>
                 ))}
