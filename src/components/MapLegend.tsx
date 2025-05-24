@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Species } from "@/types/species";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type LegendItem = {
   label: string;
@@ -25,6 +26,8 @@ const MapLegend: React.FC<MapLegendProps> = ({
   endemicSpecies = [],
   defaultTileLayer = "osm",
 }) => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
   const positionClasses = {
     "top-right": "top-4 right-4",
     "top-left": "top-4 left-4",
@@ -65,97 +68,121 @@ const MapLegend: React.FC<MapLegendProps> = ({
 
   return (
     <div
-      className={`absolute ${positionClasses[position]} z-[1000] glass-effect p-4 rounded-lg shadow-lg max-h-[80vh] overflow-y-auto ${className}`}
-      style={{ maxWidth: "300px" }}
+      className={`absolute ${
+        positionClasses[position]
+      } z-[1000] flex items-center transition-all duration-300 ease-in-out ${
+        isCollapsed ? "translate-x-[calc(100%-40px)]" : ""
+      }`}
     >
-      <h3 className="font-semibold mb-2 text-primary">{title}</h3>
+      {/* Toggle Button */}
+      <button
+        onClick={() => setIsCollapsed(!isCollapsed)}
+        className="glass-effect p-2 rounded-l-lg hover:bg-white/80 transition-colors z-[1001]"
+        aria-label={isCollapsed ? "Expand legend" : "Collapse legend"}
+      >
+        {isCollapsed ? (
+          <ChevronLeft className="h-5 w-5 text-primary" />
+        ) : (
+          <ChevronRight className="h-5 w-5 text-primary" />
+        )}
+      </button>
 
-      {/* Topographic Map Legend */}
-      {defaultTileLayer === "topo" && (
-        <div className="mb-4 pb-4 border-b">
-          <h4 className="font-medium text-sm mb-2">Tipe Hutan:</h4>
-          <div className="space-y-2">
-            {topoLegendItems.map((item, index) => (
-              <div key={`topo-${index}`} className="flex items-start gap-2">
-                {item.icon}
-                <div>
-                  <span className="text-sm block">{item.label}</span>
-                  <span className="text-xs text-gray-500 italic">
-                    {item.description}
-                  </span>
+      {/* Legend Content */}
+      <div
+        className={`glass-effect p-4 rounded-lg shadow-lg max-h-[80vh] overflow-y-auto transition-all duration-300 ease-in-out ${className} ${
+          isCollapsed ? "opacity-0 w-0" : "opacity-100"
+        }`}
+        style={{ maxWidth: "300px" }}
+      >
+        <h3 className="font-semibold mb-2 text-primary">{title}</h3>
+
+        {/* Topographic Map Legend */}
+        {defaultTileLayer === "topo" && (
+          <div className="mb-4 pb-4 border-b">
+            <h4 className="font-medium text-sm mb-2">Tipe Hutan:</h4>
+            <div className="space-y-2">
+              {topoLegendItems.map((item, index) => (
+                <div key={`topo-${index}`} className="flex items-start gap-2">
+                  {item.icon}
+                  <div>
+                    <span className="text-sm block">{item.label}</span>
+                    <span className="text-xs text-gray-500 italic">
+                      {item.description}
+                    </span>
+                  </div>
                 </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Legend Items */}
+        <div className="space-y-2 mb-4">
+          {items
+            .filter((item) => item.show !== false)
+            .map((item, index) => (
+              <div key={index} className="flex items-center gap-2">
+                {item.icon}
+                <span className="text-sm">{item.label}</span>
               </div>
             ))}
+        </div>
+
+        {/* Endemic Species Lists */}
+        {endemicFlora.length > 0 && (
+          <div className="mt-4 border-t pt-2">
+            <h4 className="font-medium text-sm mb-2 text-red-500">
+              Flora Endemik:
+            </h4>
+            <ul className="space-y-2 text-sm">
+              {endemicFlora.map((species, index) => (
+                <li key={`flora-${index}`} className="flex items-start gap-3">
+                  <div className="relative w-12 h-12 flex-shrink-0">
+                    <img
+                      src={species.image}
+                      alt={species.name}
+                      className="w-full h-full object-cover rounded-full border-2 border-red-500"
+                    />
+                  </div>
+                  <div>
+                    <span className="font-medium block">{species.name}</span>
+                    <span className="text-xs text-gray-500">
+                      {species.province}
+                    </span>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Legend Items */}
-      <div className="space-y-2 mb-4">
-        {items
-          .filter((item) => item.show !== false)
-          .map((item, index) => (
-            <div key={index} className="flex items-center gap-2">
-              {item.icon}
-              <span className="text-sm">{item.label}</span>
-            </div>
-          ))}
+        {endemicFauna.length > 0 && (
+          <div className="mt-4 border-t pt-2">
+            <h4 className="font-medium text-sm mb-2 text-yellow-500">
+              Fauna Endemik:
+            </h4>
+            <ul className="space-y-2 text-sm">
+              {endemicFauna.map((species, index) => (
+                <li key={`fauna-${index}`} className="flex items-start gap-3">
+                  <div className="relative w-12 h-12 flex-shrink-0">
+                    <img
+                      src={species.image}
+                      alt={species.name}
+                      className="w-full h-full object-cover rounded-full border-2 border-yellow-500"
+                    />
+                  </div>
+                  <div>
+                    <span className="font-medium block">{species.name}</span>
+                    <span className="text-xs text-gray-500">
+                      {species.province}
+                    </span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
-
-      {/* Endemic Species Lists */}
-      {endemicFlora.length > 0 && (
-        <div className="mt-4 border-t pt-2">
-          <h4 className="font-medium text-sm mb-2 text-red-500">
-            Flora Endemik:
-          </h4>
-          <ul className="space-y-2 text-sm">
-            {endemicFlora.map((species, index) => (
-              <li key={`flora-${index}`} className="flex items-start gap-3">
-                <div className="relative w-12 h-12 flex-shrink-0">
-                  <img
-                    src={species.image}
-                    alt={species.name}
-                    className="w-full h-full object-cover rounded-full border-2 border-red-500"
-                  />
-                </div>
-                <div>
-                  <span className="font-medium block">{species.name}</span>
-                  <span className="text-xs text-gray-500">
-                    {species.province}
-                  </span>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {endemicFauna.length > 0 && (
-        <div className="mt-4 border-t pt-2">
-          <h4 className="font-medium text-sm mb-2 text-yellow-500">
-            Fauna Endemik:
-          </h4>
-          <ul className="space-y-2 text-sm">
-            {endemicFauna.map((species, index) => (
-              <li key={`fauna-${index}`} className="flex items-start gap-3">
-                <div className="relative w-12 h-12 flex-shrink-0">
-                  <img
-                    src={species.image}
-                    alt={species.name}
-                    className="w-full h-full object-cover rounded-full border-2 border-yellow-500"
-                  />
-                </div>
-                <div>
-                  <span className="font-medium block">{species.name}</span>
-                  <span className="text-xs text-gray-500">
-                    {species.province}
-                  </span>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
     </div>
   );
 };
