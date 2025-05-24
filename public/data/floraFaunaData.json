@@ -1,0 +1,857 @@
+[
+  {
+    "province": "Aceh",
+    "center": [5.54829, 95.323753],
+    "representatives": [
+      {
+        "name": "Bungong Jeumpa",
+        "type": "floral",
+        "image": "/images/1-aceh/flora/Bungong-Jeumpa.webp",
+        "lat": 5.54829,
+        "lng": 95.323753
+      },
+      {
+        "name": "Ceumpala Kuneng",
+        "type": "fauna",
+        "image": "/images/1-aceh/Fauna/Ceumpala Kuneng.jpg",
+        "lat": 4.50825,
+        "lng": 96.5946
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Sumatera Utara",
+    "center": [3.595196, 98.672223],
+    "representatives": [
+      {
+        "name": "Kenanga",
+        "type": "floral",
+        "image": "/images/2-Sumatera Utara/flora/Kenanga.jpg",
+        "lat": 3.595196,
+        "lng": 98.672223
+      },
+      {
+        "name": "Beo Nias",
+        "type": "fauna",
+        "image": "/images/2-Sumatera Utara/fauna/Beo Nias.jpg",
+        "lat": 1.954219,
+        "lng": 99.38282
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Sumatera Barat",
+    "center": [-1.1047042838687275, 101.24509130760669],
+    "representatives": [
+      {
+        "name": "Pohon Andalas",
+        "type": "floral",
+        "image": "/images/3-Sumatera Barat/flora/Pohon Andalas.jpg",
+        "lat": -1.1047042838687275,
+        "lng": 101.24509130760669
+      },
+      {
+        "name": "Kuau Raja",
+        "type": "fauna",
+        "image": "/images/3-Sumatera Barat/Fauna/Kuau Raja.jpg",
+        "lat": -1.0130826843285092,
+        "lng": 100.97916557598933
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Riau",
+    "center": [0.507068, 101.447779],
+    "representatives": [
+      {
+        "name": "Pohon Nibung",
+        "type": "floral",
+        "image": "/images/4-riau/flora/Pohon Nibung.jpeg",
+        "lat": 0.507068,
+        "lng": 101.447779
+      },
+      {
+        "name": "Serindit Melayu",
+        "type": "fauna",
+        "image": "/images/4-riau/fauna/Serindit Melayu.jpg",
+        "lat": -0.07441266935499868,
+        "lng": 102.28005480598671
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Kepulauan Riau",
+    "center": [0.916667, 104.466667],
+    "representatives": [
+      {
+        "name": "Ikan Kakap Merah",
+        "type": "fauna",
+        "image": "/images/5-Kepulauan Riau/fauna/Ikan Kakap merah.jpg",
+        "lat": 0.916667,
+        "lng": 104.466667
+      },
+      {
+        "name": "Pohon Sirih",
+        "type": "floral",
+        "image": "/images/5-Kepulauan Riau/flora/Pohon Sirih.jpg",
+        "lat": 0.1865166947347774,
+        "lng": 104.48051153074664
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Jambi",
+    "center": [-1.610122, 103.61312],
+    "representatives": [
+      {
+        "name": "Pohon Pinang",
+        "type": "floral",
+        "image": "/images/7-Jambi/flora/Pohon Pinang.jpeg",
+        "lat": -1.610122,
+        "lng": 103.61312
+      },
+      {
+        "name": "Harimau Sumatera",
+        "type": "fauna",
+        "image": "/images/7-Jambi/fauna/Harimau Sumatera.jpg",
+        "lat": -2.053017009626231,
+        "lng": 102.87890076645715
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Sumatera Selatan",
+    "center": [-2.990934, 104.756554],
+    "representatives": [
+      {
+        "name": "Pohon Duku",
+        "type": "floral",
+        "image": "/images/8-Sumatera Selatan/flora/Pohon Duku.jpg",
+        "lat": -2.990934,
+        "lng": 104.756554
+      },
+      {
+        "name": "Ikan Belida",
+        "type": "fauna",
+        "image": "/images/8-Sumatera Selatan/fauna/Ikan Belida.jpg",
+        "lat": -3.6056402436148005,
+        "lng": 103.67757057039483
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Bengkulu",
+    "center": [-3.80044, 102.265541],
+    "representatives": [
+      {
+        "name": "Pohon Suweg Raksasa",
+        "type": "floral",
+        "image": "/images/9-Bengkulu/flora/Pohon Suweg Raksasa.jpg",
+        "lat": -3.80044,
+        "lng": 102.265541
+      },
+      {
+        "name": "Beruang Madu",
+        "type": "fauna",
+        "image": "/images/9-Bengkulu/fauna/Beruang Madu.jpg",
+        "lat": -4.5626890044839,
+        "lng": 103.3366748609788
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Lampung",
+    "center": [-5.429431, 105.261513],
+    "representatives": [
+      {
+        "name": "Bunga Asar",
+        "type": "floral",
+        "image": "/images/10-Lampung/flora/Bunga Asar.jpg",
+        "lat": -5.429431,
+        "lng": 105.261513
+      },
+      {
+        "name": "Gajah Sumatera",
+        "type": "fauna",
+        "image": "/images/10-Lampung/fauna/Gajah Sumatera.jpg",
+        "lat": -4.8113757333671,
+        "lng": 105.11374170377513
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Bangka Belitung",
+    "center": [-2.741051, 106.440587],
+    "representatives": [
+      {
+        "name": "Pohon Nagasari",
+        "type": "floral",
+        "image": "/images/6-Bangka Belitung/flora/pohon Nagasari.jpg",
+        "lat": -2.741051,
+        "lng": 106.440587
+      },
+      {
+        "name": "Mantilin",
+        "type": "fauna",
+        "image": "/images/6-Bangka Belitung/fauna/mantilin.jpg",
+        "lat": -2.847292782889056,
+        "lng": 107.93175529779597
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "DKI Jakarta",
+    "center": [-6.208763, 106.845599],
+    "representatives": [
+      {
+        "name": "Salak Condet",
+        "type": "floral",
+        "image": "/images/11-DKI Jakarta/flora/Salak Condet.jpg",
+        "lat": -6.208763,
+        "lng": 106.845599
+      },
+      {
+        "name": "Elang Bondol",
+        "type": "fauna",
+        "image": "/images/11-DKI Jakarta/fauna/Elang Bondol.jpg",
+        "lat": -6.272367461417005,
+        "lng": 106.8335870203914
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Jawa Barat",
+    "center": [-6.903444, 107.573116],
+    "representatives": [
+      {
+        "name": "Pohon Gandaria",
+        "type": "floral",
+        "image": "/images/12-Jawa Barat/flora/pohon Gandaria.jpg",
+        "lat": -6.903444,
+        "lng": 107.573116
+      },
+      {
+        "name": "Macan Tutul Jawa",
+        "type": "fauna",
+        "image": "/images/12-Jawa Barat/fauna/Macan Tutul Jawa.jpg",
+        "lat": -7.275831079175262,
+        "lng": 108.07826835380325
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Banten",
+    "center": [-6.405817, 106.064018],
+    "representatives": [
+      {
+        "name": "Pohon Kokoleceran",
+        "type": "floral",
+        "image": "/images/13-Banten/flora/Pohon Kokoleceran.jpg",
+        "lat": -6.405817,
+        "lng": 106.064018
+      },
+      {
+        "name": "Badak Jawa",
+        "type": "fauna",
+        "image": "/images/13-Banten/fauna/Badak Jawa.jpg",
+        "lat": -6.535627235157875,
+        "lng": 105.91808391372774
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Jawa Tengah",
+    "center": [-7.005145, 110.438125],
+    "representatives": [
+      {
+        "name": "Bunga Kantil",
+        "type": "floral",
+        "image": "/images/14-Jawa Tengah/flora/Bunga Kantil.webp",
+        "lat": -7.005145,
+        "lng": 110.438125
+      },
+      {
+        "name": "Kepodang Emas",
+        "type": "fauna",
+        "image": "/images/14-Jawa Tengah/fauna/Kepodang Emas.jpg",
+        "lat": -7.5142462683691065,
+        "lng": 109.63498771530209
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "DI Yogyakarta",
+    "center": [-7.801194, 110.364917],
+    "representatives": [
+      {
+        "name": "Pohon Kepel",
+        "type": "floral",
+        "image": "/images/15-DI Jogyakarta/flora/Pohon Kepel.jpg",
+        "lat": -7.801194,
+        "lng": 110.364917
+      },
+      {
+        "name": "Perkutut",
+        "type": "fauna",
+        "image": "/images/15-DI Jogyakarta/fauna/Perkutut.jpg",
+        "lat": -8.04550755888188,
+        "lng": 110.56930233476322
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Jawa Timur",
+    "center": [-7.250445, 112.768845],
+    "representatives": [
+      {
+        "name": "Bunga Sedap Malam",
+        "type": "floral",
+        "image": "/images/16-Jawa Timur/flora/Bunga Sedap Malam.jpg",
+        "lat": -7.250445,
+        "lng": 112.768845
+      },
+      {
+        "name": "Ayam Bekisar",
+        "type": "fauna",
+        "image": "/images/16-Jawa Timur/fauna/Ayam Bekisar.jpg",
+        "lat": -7.425307484003028,
+        "lng": 112.05827577689814
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Bali",
+    "center": [-8.409518, 115.188919],
+    "representatives": [
+      {
+        "name": "Pohon Majegau",
+        "type": "floral",
+        "image": "/images/17-Bali/flora/Pohon Majegau.jpg",
+        "lat": -8.409518,
+        "lng": 115.188919
+      },
+      {
+        "name": "Jalak Bali",
+        "type": "fauna",
+        "image": "/images/17-Bali/fauna/Jalak Bali.jpg",
+        "lat": -8.297771008888077,
+        "lng": 114.97199032141981
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Nusa Tenggara Barat",
+    "center": [-8.652933, 117.361647],
+    "representatives": [
+      {
+        "name": "Pohon Kelicung",
+        "type": "floral",
+        "image": "/images/18-Nusa Tenggara  Barat/flora/Pohon Kelicung.jpg",
+        "lat": -8.652933,
+        "lng": 117.361647
+      },
+      {
+        "name": "Rusa",
+        "type": "fauna",
+        "image": "/images/18-Nusa Tenggara  Barat/fauna/Rusa.webp",
+        "lat": -8.763933828449424,
+        "lng": 117.54518482536764
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Nusa Tenggara Timur",
+    "center": [-10.177199, 123.607032],
+    "representatives": [
+      {
+        "name": "Pohon Cendana",
+        "type": "floral",
+        "image": "/images/19-Nusa Tenggara Timur/flora/Pohon Cendana.jpg",
+        "lat": -10.177199,
+        "lng": 123.607032
+      },
+      {
+        "name": "Komodo",
+        "type": "fauna",
+        "image": "/images/19-Nusa Tenggara Timur/fauna/Komodo.jpg",
+        "lat": -9.49980462924961,
+        "lng": 124.86986975362674
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Kalimantan Barat",
+    "center": [-0.02633, 109.342503],
+    "representatives": [
+      {
+        "name": "Pohon Tengkawang Tungkul",
+        "type": "floral",
+        "image": "/images/20-Kalimantan Barat/Flora/Pohon tengkawang tungkul .jpg",
+        "lat": -0.02633,
+        "lng": 109.342503
+      },
+      {
+        "name": "Enggang Gading",
+        "type": "fauna",
+        "image": "/images/20-Kalimantan Barat/Fauna/Enggang Gading .jpg",
+        "lat": 0.3251287377417498,
+        "lng": 111.64404187294963
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Kalimantan Tengah",
+    "center": [-1.681487, 113.382354],
+    "representatives": [
+      {
+        "name": "Pohon Tenggaring",
+        "type": "floral",
+        "image": "/images/21-Kalimantan Tengah/flora/Pohon Tenggaring.jpg",
+        "lat": -1.681487,
+        "lng": 113.382354
+      },
+      {
+        "name": "Kuau Kerdil Kalimantan",
+        "type": "fauna",
+        "image": "/images/21-Kalimantan Tengah/Fauna/Kuau Kerdil Kalimantan.jpg",
+        "lat": -0.996938714958759,
+        "lng": 113.94754188998797
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Kalimantan Selatan",
+    "center": [-3.318606, 114.594378],
+    "representatives": [
+      {
+        "name": "Pohon Kasturi",
+        "type": "floral",
+        "image": "/images/22-Kalimantan Selatan/flora/Pohon Kasturi.jpg",
+        "lat": -3.318606,
+        "lng": 114.594378
+      },
+      {
+        "name": "Bekantan",
+        "type": "fauna",
+        "image": "/images/22-Kalimantan Selatan/Fauna/Bekantan.jpg",
+        "lat": -2.7773182586149545,
+        "lng": 115.86178899343048
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Kalimantan Timur",
+    "center": [-0.392603, 117.121587],
+    "representatives": [
+      {
+        "name": "Bunga Anggrek Hitam",
+        "type": "floral",
+        "image": "/images/23-Kalimantan Timur/Flora/anggrek hitam.jpg",
+        "lat": 0.696559,
+        "lng": 116.884633
+      },
+      {
+        "name": "Pesut Mahakam",
+        "type": "fauna",
+        "image": "/images/23-Kalimantan Timur/Fauna/Pesut Mahakam Kaltim.jpg",
+        "lat": -0.265026,
+        "lng": 116.793553
+      }
+    ],
+    "data": [
+      {
+        "name": "Bekantan",
+        "type": "fauna",
+        "lat": 0.423281,
+        "lng": 116.439266,
+        "image": "/images/23-Kalimantan Timur/Fauna/Bekantan Kaltim.jpg"
+      },
+      {
+        "name": "Enggang Gading",
+        "type": "fauna",
+        "lat": -1.5391923005317665,
+        "lng": 116.21217398860273,
+        "image": "/images/23-Kalimantan Timur/Fauna/Enggang Gading Kaltim.jpg"
+      },
+      {
+        "name": "Gajah Borneo Kaltim",
+        "type": "fauna",
+        "lat": -0.981176615354812,
+        "lng": 116.46799406369394,
+        "image": "/images/23-Kalimantan Timur/Fauna/Gajah Borneo kaltim.jpg"
+      },
+      {
+        "name": "Gajah Borneo Kaltim",
+        "type": "fauna",
+        "lat": 0.29787445849837013,
+        "lng": 116.61528440995829,
+        "image": "/images/23-Kalimantan Timur/Fauna/Orang utan kaltim.jpeg"
+      },
+      {
+        "name": "Pandan Air",
+        "type": "floral",
+        "lat": 1.1657092759295296,
+        "lng": 117.10419991674854,
+        "image": "/images/23-Kalimantan Timur/Flora/pandan air kaltim.jpg"
+      },
+      {
+        "name": "Pohon Bakau",
+        "type": "floral",
+        "lat": 1.4214639408236138,
+        "lng": 118.01119836480177,
+        "image": "/images/23-Kalimantan Timur/Flora/Pohon Bakau Kaltim.jpeg"
+      },
+      {
+        "name": "Pohon Tengkawang Tungkul",
+        "type": "floral",
+        "lat": 2.1420580949645824,
+        "lng": 116.91814895304515,
+        "image": "/images/23-Kalimantan Timur/Flora/Pohon tengkawang tungkul Kaltim.jpg"
+      },
+      {
+        "name": "Pohon Kasturi Kaltim",
+        "type": "floral",
+        "lat": 0.9874419814975965,
+        "lng": 114.67003314163429,
+        "image": "/images/23-Kalimantan Timur/Flora/Pohon Kasturi Kaltim.jpg"
+      }
+    ]
+  },
+  {
+    "province": "Kalimantan Utara",
+    "center": [3.3244, 117.5975],
+    "representatives": [
+      {
+        "name": "Pohon Bakau",
+        "type": "floral",
+        "image": "/images/24-Kalimantan Utara/Flora/Pohon Bakau.jpeg",
+        "lat": 3.3244,
+        "lng": 117.5975
+      },
+      {
+        "name": "Gajah Borneo",
+        "type": "fauna",
+        "image": "/images/24-Kalimantan Utara/Fauna/Gajah Borneo.jpg",
+        "lat": 3.7554222804469504,
+        "lng": 117.04497951227472
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Sulawesi Utara",
+    "center": [1.47483, 124.842079],
+    "representatives": [
+      {
+        "name": "Pohon Cempaka Hutan",
+        "type": "floral",
+        "image": "/images/25-Sulawesi Utara/flora/Pohon Cempaka Hutan.jpg",
+        "lat": 1.47483,
+        "lng": 124.842079
+      },
+      {
+        "name": "Tangkasi",
+        "type": "fauna",
+        "image": "/images/25-Sulawesi Utara/fauna/Tangkasi.jpg",
+        "lat": 0.9098651263503541,
+        "lng": 124.25036825514655
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Gorontalo",
+    "center": [0.543544, 123.056769],
+    "representatives": [
+      {
+        "name": "Pohon Jati",
+        "type": "floral",
+        "image": "/images/26-Gorontalo/flora/Pohon Jati.webp",
+        "lat": 0.543544,
+        "lng": 123.056769
+      },
+      {
+        "name": "Ikan Bulalao",
+        "type": "fauna",
+        "image": "/images/26-Gorontalo/fauna/ikan-bulalao.webp",
+        "lat": 0.7463245600163191,
+        "lng": 122.16117859375106
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Sulawesi Tengah",
+    "center": [-0.89997, 119.87763],
+    "representatives": [
+      {
+        "name": "Pohon Eboni",
+        "type": "floral",
+        "image": "/images/27-Sulawesi Tengah/flora/Pohon Eboni.jpeg",
+        "lat": -0.89997,
+        "lng": 119.87763
+      },
+      {
+        "name": "Maleo",
+        "type": "fauna",
+        "image": "/images/27-Sulawesi Tengah/fauna/Maleo.jpg",
+        "lat": 0.635198044834766,
+        "lng": 120.5340800441075
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Sulawesi Barat",
+    "center": [-2.67864, 119.232078],
+    "representatives": [
+      {
+        "name": "Pohon Jati",
+        "type": "floral",
+        "image": "/images/28-Sulawesi Barat/flora/Pohon Jati.webp",
+        "lat": -2.67864,
+        "lng": 119.232078
+      },
+      {
+        "name": "anoa",
+        "type": "fauna",
+        "image": "/images/28-Sulawesi Barat/fauna/anoa.jpeg",
+        "lat": -2.136843968577338,
+        "lng": 119.41188543695887
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Sulawesi Selatan",
+    "center": [-5.147665, 119.432732],
+    "representatives": [
+      {
+        "name": "Pohon Lontar",
+        "type": "floral",
+        "image": "/images/29-Sulawesi Selatan/flora/Pohon Lontar.jpg",
+        "lat": -5.147665,
+        "lng": 119.432732
+      },
+      {
+        "name": "anoa",
+        "type": "fauna",
+        "image": "/images/29-Sulawesi Selatan/fauna/anoa.jpeg",
+        "lat": -3.4356048304275646,
+        "lng": 119.97905836803187
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Sulawesi Tenggara",
+    "center": [-4.1439, 122.1746],
+    "representatives": [
+      {
+        "name": "Pohon Eboni",
+        "type": "floral",
+        "image": "/images/30-Sulawesi Tenggara/flora/Pohon Eboni.jpeg",
+        "lat": -4.1439,
+        "lng": 122.1746
+      },
+      {
+        "name": "anoa",
+        "type": "fauna",
+        "image": "/images/30-Sulawesi Tenggara/fauna/anoa.jpeg",
+        "lat": -3.352717858709383,
+        "lng": 121.51354827299195
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Maluku",
+    "center": [-3.654703, 128.190758],
+    "representatives": [
+      {
+        "name": "Pohon Kenari",
+        "type": "floral",
+        "image": "/images/31-Maluku/flora/Pohon Kenari.jpg",
+        "lat": -3.654703,
+        "lng": 128.190758
+      },
+      {
+        "name": "kakatua Raja",
+        "type": "fauna",
+        "image": "/images/31-Maluku/fauna/kakatua Raja.jpeg",
+        "lat": -3.0852821349266293,
+        "lng": 129.67121797473004
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Maluku Utara",
+    "center": [0.789275, 127.396255],
+    "representatives": [
+      {
+        "name": "Pohon Cengkeh",
+        "type": "floral",
+        "image": "/images/32-Maluku Utara/flora/Pohon Cengkeh.jpg",
+        "lat": 0.789275,
+        "lng": 127.396255
+      },
+      {
+        "name": "Kakatua Putih",
+        "type": "fauna",
+        "image": "/images/32-Maluku Utara/fauna/Kakatua Putih.jpg",
+        "lat": 1.2736799557807217,
+        "lng": 128.638409475321
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Papua",
+    "center": [-2.533712, 140.718132],
+    "representatives": [
+      {
+        "name": "Pohon Matoa",
+        "type": "floral",
+        "image": "/images/33-Papua/flora/Pohon Matoa.jpg",
+        "lat": -2.533712,
+        "lng": 140.718132
+      },
+      {
+        "name": "Burung Cendrawasih",
+        "type": "fauna",
+        "image": "/images/33-Papua/fauna/Burung Cendrawasih.jpeg",
+        "lat": -3.044652474580232,
+        "lng": 139.28772471414464
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Papua Barat",
+    "center": [-0.862896, 134.062042],
+    "representatives": [
+      {
+        "name": "Pohon Matoa",
+        "type": "floral",
+        "image": "/images/34-Papua Barat/flora/Pohon Matoa.jpg",
+        "lat": -0.862896,
+        "lng": 134.062042
+      },
+      {
+        "name": "Burung Cendrawasih",
+        "type": "fauna",
+        "image": "/images/34-Papua Barat/fauna/Burung Cendrawasih.jpeg",
+        "lat": -3.00332504802671,
+        "lng": 133.08463443808694
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Papua Tengah",
+    "center": [-3.916667, 137.583333],
+    "representatives": [
+      {
+        "name": "Pohon Matoa",
+        "type": "floral",
+        "image": "/images/35-Papua Tengah/flora/Pohon Matoa.jpg",
+        "lat": -3.916667,
+        "lng": 137.583333
+      },
+      {
+        "name": "Burung Cendrawasih",
+        "type": "fauna",
+        "image": "/images/35-Papua Tengah/fauna/Burung Cendrawasih.jpeg",
+        "lat": -4.329462135850463,
+        "lng": 136.17679880822067
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Papua Pegunungan",
+    "center": [-4.083333, 138.966667],
+    "representatives": [
+      {
+        "name": "Pohon Matoa",
+        "type": "floral",
+        "image": "/images/36-Papua Pegunungan/flora/Pohon Matoa.jpg",
+        "lat": -4.083333,
+        "lng": 138.966667
+      },
+      {
+        "name": "Burung Cendrawasih",
+        "type": "fauna",
+        "image": "/images/36-Papua Pegunungan/fauna/Burung Cendrawasih.jpeg",
+        "lat": -3.844435210520942,
+        "lng": 139.24328333280243
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Papua Selatan",
+    "center": [-7.666667, 139.666667],
+    "representatives": [
+      {
+        "name": "Pohon Matoa",
+        "type": "floral",
+        "image": "/images/37-Papua Selatan/flora/Pohon Matoa.jpg",
+        "lat": -7.666667,
+        "lng": 139.666667
+      },
+      {
+        "name": "Burung Cendrawasih",
+        "type": "fauna",
+        "image": "/images/37-Papua Selatan/fauna/Burung Cendrawasih.jpeg",
+        "lat": -7.120342027674198,
+        "lng": 139.34941403058394
+      }
+    ],
+    "data": []
+  },
+  {
+    "province": "Papua Barat Daya",
+    "center": [-1.336115, 131.273503],
+    "representatives": [
+      {
+        "name": "Pohon Matoa",
+        "type": "floral",
+        "image": "/images/38-Papua Barat Daya/flora/Pohon Matoa.jpg",
+        "lat": -1.336115,
+        "lng": 131.273503
+      },
+      {
+        "name": "Burung Cendrawasih",
+        "type": "fauna",
+        "image": "/images/38-Papua Barat Daya/fauna/Burung Cendrawasih.jpeg",
+        "lat": -1.0312923534739014,
+        "lng": 130.86121593755036
+      }
+    ],
+    "data": []
+  }
+]
