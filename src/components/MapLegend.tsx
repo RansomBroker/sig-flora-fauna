@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Species } from "@/types/species";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -17,6 +17,8 @@ type MapLegendProps = {
   endemicSpecies?: Species[];
   defaultTileLayer?: "osm" | "satellite" | "hybrid" | "topo";
   showPolygons?: boolean;
+  isCollapsed?: boolean;
+  onToggleCollapse?: () => void;
 };
 
 const MapLegend: React.FC<MapLegendProps> = ({
@@ -27,8 +29,25 @@ const MapLegend: React.FC<MapLegendProps> = ({
   endemicSpecies = [],
   defaultTileLayer = "osm",
   showPolygons = false,
+  isCollapsed: propIsCollapsed,
+  onToggleCollapse: propOnToggleCollapse,
 }) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [internalIsCollapsed, setInternalIsCollapsed] = useState(false);
+
+  const isControlled =
+    propIsCollapsed !== undefined && propOnToggleCollapse !== undefined;
+
+  const currentIsCollapsed = isControlled
+    ? propIsCollapsed
+    : internalIsCollapsed;
+
+  const handleToggleCollapse = () => {
+    if (isControlled) {
+      propOnToggleCollapse!();
+    } else {
+      setInternalIsCollapsed(!internalIsCollapsed);
+    }
+  };
 
   const positionClasses = {
     "top-right": "top-4 right-4",
@@ -44,27 +63,23 @@ const MapLegend: React.FC<MapLegendProps> = ({
     (species) => species.type === "fauna" && species.is_endemic
   );
 
-  const translateClass = isCollapsed
-    ? position.includes("left") // Adjust based on left or right position
-      ? "-translate-x-[calc(100%-100px)]" // For left-positioned legends
-      : "translate-x-[calc(100%-100px)]" // For right-positioned legends (e.g. bottom-right)
+  const translateClass = currentIsCollapsed
+    ? position.includes("left")
+      ? "-translate-x-[calc(100%-100px)]"
+      : "translate-x-[calc(100%-100px)]"
     : "translate-x-0";
 
   return (
     <div
-      className={`absolute ${
-        positionClasses[position]
-      } z-[1000] flex items-center transition-all duration-300 ease-in-out ${
-        translateClass // Use the dynamic translateClass here
-      }`}
+      className={`absolute ${positionClasses[position]} z-[1000] flex items-center transition-all duration-300 ease-in-out ${translateClass}`}
     >
       {/* Toggle Button */}
       <button
-        onClick={() => setIsCollapsed(!isCollapsed)}
+        onClick={handleToggleCollapse}
         className="glass-effect p-2 rounded-l-lg hover:bg-white/80 transition-colors z-[1001] flex items-center"
-        aria-label={isCollapsed ? "Expand legend" : "Collapse legend"}
+        aria-label={currentIsCollapsed ? "Expand legend" : "Collapse legend"}
       >
-        {isCollapsed ? (
+        {currentIsCollapsed ? (
           <>
             <ChevronLeft className="h-5 w-5 text-primary flex-shrink-0" />
             <span className="ml-1.5 text-sm text-primary whitespace-nowrap">
@@ -79,7 +94,7 @@ const MapLegend: React.FC<MapLegendProps> = ({
       {/* Legend Content */}
       <div
         className={`glass-effect p-4 rounded-lg shadow-lg max-h-[80vh] overflow-y-auto transition-all duration-300 ease-in-out ${className} ${
-          isCollapsed ? "opacity-0 w-0" : "opacity-100"
+          currentIsCollapsed ? "opacity-0 w-0" : "opacity-100"
         }`}
         style={{ maxWidth: "300px" }}
       >
