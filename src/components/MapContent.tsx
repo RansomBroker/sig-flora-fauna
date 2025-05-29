@@ -13,6 +13,12 @@ import {
 import L, { LatLngBoundsExpression, LatLngTuple } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { wallaceLine, webberLine } from "../lib/lineCoordinate";
+import {
+  tropisBasah,
+  tropisKering,
+  tropisSedang,
+  tropisPegunungan,
+} from "../lib/tropis"; // Import tropis arrays
 import { Species } from "@/types/species";
 
 type Representative = Species;
@@ -27,6 +33,7 @@ type ProvinceData = {
 type ProvincePolygon = {
   province: string;
   polygon: LatLngTuple[][];
+  properties: GeoJsonFeature["properties"];
 };
 
 // Define types for GeoJSON structure
@@ -39,6 +46,7 @@ interface GeoJsonFeature {
   type: "Feature";
   properties: {
     PROVINSI: string;
+    // ZONAKLIM?: string; // ZONAKLIM is no longer used for styling here
     // Add other properties if they exist and are used
   };
   geometry: Geometry;
@@ -107,6 +115,41 @@ const FlyTo = ({
 };
 
 const { BaseLayer } = LayersControl;
+
+// Helper function to get color based on climate zone arrays
+const getClimateZoneStyleFromTropisArray = (provinceName: string) => {
+  if (tropisBasah.includes(provinceName)) {
+    return { fillColor: "#73b273", color: "#003b79" }; // Greenish, Dark Blue border
+  }
+  if (tropisKering.includes(provinceName)) {
+    return { fillColor: "#f6c567", color: "#003b79" }; // Yellowish, Dark Blue border
+  }
+  if (tropisSedang.includes(provinceName)) {
+    return { fillColor: "#aef1b0", color: "#003b79" }; // Light Green, Dark Blue border
+  }
+  if (tropisPegunungan.includes(provinceName)) {
+    return { fillColor: "#97dbf2", color: "#003b79" }; // Light Blue, Dark Blue border
+  }
+  return { fillColor: "#97dbf2", color: "#003b79" }; // Default: Light Blue, Dark Blue border (matches old default)
+};
+
+/*
+// This is the old function that was based on ZONAKLIM property from GeoJSON.
+// It's being replaced by getClimateZoneStyleFromTropisArray, which uses imported arrays.
+const getClimateZoneColor = (climateZone?: string) => {
+  if (!climateZone) return "#97d2e3";
+  switch (climateZone.toLowerCase()) {
+    case "iklim tropis basah":
+      return "#4CAF50";
+    case "iklim tropis kering":
+      return "#FFC107";
+    case "iklim tropis musim":
+      return "#2196F3";
+    default:
+      return "#9E9E9E";
+  }
+};
+*/
 
 const MapContent: React.FC<MapContentProps> = ({
   showFlora = true,
@@ -192,6 +235,7 @@ const MapContent: React.FC<MapContentProps> = ({
           return {
             province: feature.properties.PROVINSI,
             polygon: featurePolygonRings,
+            properties: feature.properties,
           };
         });
         setIndonesiaPolygon(polygons);
@@ -445,18 +489,27 @@ const MapContent: React.FC<MapContentProps> = ({
                 <React.Fragment
                   key={`${provincePolygon.province}-${index}-fragment`}
                 >
-                  {provincePolygon.polygon.map((ring, ringIndex) => (
-                    <Polygon
-                      key={`${provincePolygon.province}-${index}-ring-${ringIndex}`}
-                      positions={ring}
-                      pathOptions={{
-                        color: "#b0c4de",
-                        fillColor: "#97d2e3",
-                        fillOpacity: 1,
-                        weight: 1,
-                      }}
-                    />
-                  ))}
+                  {provincePolygon.polygon.map((ring, ringIndex) => {
+                    const style = getClimateZoneStyleFromTropisArray(
+                      provincePolygon.province
+                    );
+                    return (
+                      <Polygon
+                        key={`${provincePolygon.province}-${index}-ring-${ringIndex}`}
+                        positions={ring}
+                        pathOptions={{
+                          color: style.color,
+                          fillColor: style.fillColor,
+                          fillOpacity: 0.9, // As per your example
+                          weight: 1,
+                        }}
+                      >
+                        <Popup>
+                          <strong>{provincePolygon.province}</strong>
+                        </Popup>
+                      </Polygon>
+                    );
+                  })}
                 </React.Fragment>
               ))}
             {/* End of polygon rendering logic */}
