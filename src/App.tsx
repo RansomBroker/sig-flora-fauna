@@ -9,7 +9,7 @@ import NotFound from "./pages/NotFound";
 import Flora from "./pages/Flora";
 import Fauna from "./pages/Fauna";
 import Habitat from "./pages/Habitat";
-
+import ZonaHabitat from "./pages/ZonaHabitat";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -24,6 +24,7 @@ const App = () => (
             <Route path="/flora" element={<Flora />} />
             <Route path="/fauna" element={<Fauna />} />
             <Route path="/habitat" element={<Habitat />} />
+            <Route path="/zonahabitat" element={<ZonaHabitat />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>

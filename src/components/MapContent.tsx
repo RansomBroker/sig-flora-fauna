@@ -376,7 +376,7 @@ const MapContent: React.FC<MapContentProps> = ({
                           : tropisPegunungan.includes(provincePolygon.province)
                           ? "#97dbf2"
                           : "#97dbf2",
-                        fillOpacity: 0.5,
+                        fillOpacity: 0.8,
                         weight: 1,
                       }}
                     >

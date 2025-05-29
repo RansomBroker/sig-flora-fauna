@@ -1,29 +1,21 @@
 import React, { useState, useMemo } from "react";
 import MapContent from "@/components/MapContent";
-import MapLegend, { defaultFloraLegendItems } from "@/components/MapLegend";
+import MapLegend from "@/components/MapLegend"; // No specific items needed for main legend
 import { ArrowLeft } from "lucide-react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { Species } from "@/types/species";
+import { useNavigate } from "react-router-dom";
+import { Species } from "@/types/species"; // Keep for endemicSpecies prop type consistency
 
-const Flora = () => {
+const ZonaHabitat = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  // Endemic species state and handler, though not strictly used for legend items, MapLegend expects the prop
   const [endemicSpecies, setEndemicSpecies] = useState<Species[]>([]);
-
-  // Get province from URL params or default to Kalimantan Timur
-  // const province = searchParams.get("province") || "Kalimantan Timur"; // Removed
 
   const handleEndemicSpeciesChange = (species: Species[]) => {
     setEndemicSpecies(species);
   };
 
   const legendEndemicSpecies = useMemo(() => {
-    return endemicSpecies.filter((species) => species.type === "floral");
-  }, [endemicSpecies]);
-
-  // Filter species by selected province - No longer filtering by province
-  const filteredSpecies = useMemo(() => {
-    return endemicSpecies; // Return all endemic species
+    return endemicSpecies; // Pass through, not used for items here but MapLegend expects it
   }, [endemicSpecies]);
 
   return (
@@ -38,21 +30,23 @@ const Flora = () => {
       </div>
       <MapContent
         showFlora={true}
-        showFauna={false}
+        showFauna={true}
         showLines={true}
-        showPolygons={false}
+        showPolygons={true}
         width="100%"
         height="100vh"
+        defaultZoom={5}
         onEndemicSpeciesChange={handleEndemicSpeciesChange}
       />
       <MapLegend
-        title="Legenda Flora"
-        items={defaultFloraLegendItems}
+        title="Legenda Zona Habitat"
+        items={[]}
         position="bottom-right"
         endemicSpecies={legendEndemicSpecies}
+        showPolygons={true} // Show only the polygon legend section
       />
     </div>
   );
 };
 
-export default Flora;
+export default ZonaHabitat;

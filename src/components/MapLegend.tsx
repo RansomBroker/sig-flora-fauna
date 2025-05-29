@@ -16,6 +16,7 @@ type MapLegendProps = {
   className?: string;
   endemicSpecies?: Species[];
   defaultTileLayer?: "osm" | "satellite" | "hybrid" | "topo";
+  showPolygons?: boolean;
 };
 
 const MapLegend: React.FC<MapLegendProps> = ({
@@ -25,6 +26,7 @@ const MapLegend: React.FC<MapLegendProps> = ({
   className = "",
   endemicSpecies = [],
   defaultTileLayer = "osm",
+  showPolygons = false,
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -42,46 +44,33 @@ const MapLegend: React.FC<MapLegendProps> = ({
     (species) => species.type === "fauna" && species.is_endemic
   );
 
-  // Topographic map legend items
-  const topoLegendItems: LegendItem[] = [
-    {
-      label: "Dataran Rendah Tropis",
-      description: "Lowland Tropical Forest",
-      icon: (
-        <div
-          className="w-6 h-6 rounded-md"
-          style={{ backgroundColor: "#34f400" }}
-        />
-      ),
-    },
-    {
-      label: "Dataran Menengah",
-      description: "Lower Montane Forest",
-      icon: (
-        <div
-          className="w-6 h-6 rounded-md"
-          style={{ backgroundColor: "#f1f000" }}
-        />
-      ),
-    },
-  ];
+  const translateClass = isCollapsed
+    ? position.includes("left") // Adjust based on left or right position
+      ? "-translate-x-[calc(100%-100px)]" // For left-positioned legends
+      : "translate-x-[calc(100%-100px)]" // For right-positioned legends (e.g. bottom-right)
+    : "translate-x-0";
 
   return (
     <div
       className={`absolute ${
         positionClasses[position]
       } z-[1000] flex items-center transition-all duration-300 ease-in-out ${
-        isCollapsed ? "translate-x-[calc(100%-40px)]" : ""
+        translateClass // Use the dynamic translateClass here
       }`}
     >
       {/* Toggle Button */}
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="glass-effect p-2 rounded-l-lg hover:bg-white/80 transition-colors z-[1001]"
+        className="glass-effect p-2 rounded-l-lg hover:bg-white/80 transition-colors z-[1001] flex items-center"
         aria-label={isCollapsed ? "Expand legend" : "Collapse legend"}
       >
         {isCollapsed ? (
-          <ChevronLeft className="h-5 w-5 text-primary" />
+          <>
+            <ChevronLeft className="h-5 w-5 text-primary flex-shrink-0" />
+            <span className="ml-1.5 text-sm text-primary whitespace-nowrap">
+              Legenda
+            </span>
+          </>
         ) : (
           <ChevronRight className="h-5 w-5 text-primary" />
         )}
@@ -96,20 +85,55 @@ const MapLegend: React.FC<MapLegendProps> = ({
       >
         <h3 className="font-semibold mb-2 text-primary">{title}</h3>
 
-        {/* Topographic Map Legend */}
+        {/* Topographic Map Elevation Legend */}
         {defaultTileLayer === "topo" && (
           <div className="mb-4 pb-4 border-b">
-            <h4 className="font-medium text-sm mb-2">Tipe Hutan:</h4>
+            <h4 className="font-medium text-sm mb-2">Ketinggian (m):</h4>
+            <div className="flex flex-col items-center space-y-1">
+              <span className="text-xs">High: 4622</span>
+              <div
+                className="w-5 h-20 border border-gray-400 rounded-sm"
+                style={{
+                  background:
+                    "linear-gradient(to bottom, #ff6347, #ffd700, #90ee90, #32cd32)", // Tomato, Gold, LightGreen, LimeGreen
+                }}
+              />
+              <span className="text-xs">Low: -410</span>
+            </div>
+          </div>
+        )}
+
+        {/* Custom Habitat Polygon Legend */}
+        {showPolygons && (
+          <div className="mb-4 pb-4 border-b">
             <div className="space-y-2">
-              {topoLegendItems.map((item, index) => (
-                <div key={`topo-${index}`} className="flex items-start gap-2">
-                  {item.icon}
-                  <div>
-                    <span className="text-sm block">{item.label}</span>
-                    <span className="text-xs text-gray-500 italic">
-                      {item.description}
-                    </span>
-                  </div>
+              {[
+                {
+                  label: "Tropis Basah",
+                  color: "#73b273",
+                },
+                {
+                  label: "Tropis Sedang",
+                  color: "#f6c567",
+                },
+                {
+                  label: "Tropis Kering",
+                  color: "#aef1b0",
+                },
+                {
+                  label: "Tropis Pegunungan",
+                  color: "#97dbf2",
+                },
+              ].map((item, index) => (
+                <div
+                  key={`habitat-${index}`}
+                  className="flex items-center gap-2"
+                >
+                  <div
+                    className="w-6 h-4 rounded-sm border border-gray-400"
+                    style={{ backgroundColor: item.color }}
+                  />
+                  <span className="text-sm block">{item.label}</span>
                 </div>
               ))}
             </div>
@@ -196,18 +220,25 @@ export const defaultFloraLegendItems: LegendItem[] = [
     ),
   },
   {
-    label: "Fauna Endemik",
-    icon: (
-      <div className="w-6 h-6 rounded-full bg-white border-4 border-yellow-500" />
-    ),
-  },
-  {
     label: "Flora Non-Endemik",
     icon: <div className="w-6 h-6 rounded-full bg-white" />,
   },
 ];
 
 export const defaultFaunaLegendItems: LegendItem[] = [
+  {
+    label: "Fauna Endemik",
+    icon: (
+      <div className="w-6 h-6 rounded-full bg-white border-4 border-yellow-500" />
+    ),
+  },
+  {
+    label: "Fauna Non-Endemik",
+    icon: <div className="w-6 h-6 rounded-full bg-white" />,
+  },
+];
+
+export const defaultHabitatLegendItems: LegendItem[] = [
   {
     label: "Flora Endemik",
     icon: (
@@ -221,8 +252,20 @@ export const defaultFaunaLegendItems: LegendItem[] = [
     ),
   },
   {
+    label: "Flora Non-Endemik",
+    icon: <div className="w-6 h-6 rounded-full bg-white" />,
+  },
+  {
     label: "Fauna Non-Endemik",
     icon: <div className="w-6 h-6 rounded-full bg-white" />,
+  },
+  {
+    label: "Garis Wallace",
+    icon: <div className="w-6 h-1 bg-[#0070c0]" />,
+  },
+  {
+    label: "Garis Webber",
+    icon: <div className="w-6 h-1 bg-[#7030a0]" />,
   },
 ];
 

@@ -6,16 +6,16 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const Index = () => {
   return (
-    <div className="min-h-screen p-4 md:p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen p-2 md:p-4 lg:p-6">
+      <div className="max-w-8xl mx-auto">
         <TopNavigation />
 
-        <div className="mt-10 grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="mt-10 grid grid-cols-1 lg:grid-cols-7 gap-6">
           <div className="hidden lg:block lg:col-span-1">
             <SideNavigation />
           </div>
 
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-5">
             <MainContent />
           </div>
 

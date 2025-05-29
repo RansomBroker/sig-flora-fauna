@@ -37,7 +37,12 @@ const MainNavigation = () => {
         ))}
       </div>
 
-      {activeCategory === "Persebaran" && <CategoryDetail />}
+      {activeCategory === "Persebaran" && (
+        <CategoryDetail contentType="persebaran" />
+      )}
+      {activeCategory === "Interaktifitas" && (
+        <CategoryDetail contentType="interaktifitas" />
+      )}
     </div>
   );
 };

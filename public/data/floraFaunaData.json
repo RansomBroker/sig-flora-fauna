@@ -466,7 +466,7 @@
       {
         "name": "Pohon Tenggaring",
         "type": "floral",
-        "image": "/images/21-Kalimantan Tengah/flora/Pohon Tenggaring.jpg",
+        "image": "/images/21-Kalimantan Tengah/Flora/Pohon Tenggaring.jpg",
         "lat": -1.681487,
         "lng": 113.382354,
         "is_endemic": false
@@ -489,7 +489,7 @@
       {
         "name": "Pohon Kasturi",
         "type": "floral",
-        "image": "/images/22-Kalimantan Selatan/flora/Pohon Kasturi.jpg",
+        "image": "/images/22-Kalimantan Selatan/Flora/Pohon Kasturi.jpg",
         "lat": -3.318606,
         "lng": 114.594378,
         "is_endemic": false

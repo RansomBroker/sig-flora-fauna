@@ -2,15 +2,25 @@ import React from "react";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const CategoryDetail = () => {
+interface CategoryDetailProps {
+  contentType: "persebaran" | "interaktifitas";
+}
+
+const CategoryDetail: React.FC<CategoryDetailProps> = ({ contentType }) => {
   const navigate = useNavigate();
 
-  const categories = [
-    { name: "Flora", icon: "🌿", path: "/flora" },
-    { name: "Fauna", icon: "🦁", path: "/fauna" },
-    { name: "Tipe Habitat", icon: "🏞️", path: "/habitat" },
-    { name: "Jenis", icon: "🧬", path: "/jenis" },
-  ];
+  let categories = [];
+  if (contentType === "persebaran") {
+    categories = [
+      { name: "Flora", icon: "🌿", path: "/flora" },
+      { name: "Fauna", icon: "🦁", path: "/fauna" },
+    ];
+  } else if (contentType === "interaktifitas") {
+    categories = [
+      { name: "Tipe Habitat", icon: "🏞️", path: "/habitat" },
+      { name: "Jenis", icon: "🧬", path: "/zonahabitat" },
+    ];
+  }
 
   const handleCategoryClick = (path: string) => {
     navigate(path);
