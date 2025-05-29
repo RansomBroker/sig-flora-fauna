@@ -43,6 +43,46 @@ const MainNavigation = () => {
       {activeCategory === "Interaktifitas" && (
         <CategoryDetail contentType="interaktifitas" />
       )}
+      {activeCategory === "Tujuan dan materi umum" && (
+        <div className="mt-5 p-4 glass-effect rounded-xl fade-in">
+          <h3 className="text-lg font-semibold mb-3">Materi</h3>
+          <ul className="list-disc list-inside space-y-2">
+            <li>
+              <a
+                href="/materi/MATERI FLORA DAN FAUNA INDONESIA.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                MATERI FLORA DAN FAUNA INDONESIA.pdf
+              </a>
+            </li>
+          </ul>
+          <h3 className="text-lg font-semibold mt-4 mb-3">Bahan</h3>
+          <ul className="list-disc list-inside space-y-2">
+            <li>
+              <a
+                href="/materi/RPP_MODUL AJAR GEOGRAFI.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                RPP_MODUL AJAR GEOGRAFI.pdf
+              </a>
+            </li>
+            <li>
+              <a
+                href="/materi/SILABUS.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                SILABUS.pdf
+              </a>
+            </li>
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
