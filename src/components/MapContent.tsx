@@ -69,7 +69,9 @@ type MapContentProps = {
   defaultZoom?: number;
   defaultTileLayer?: "osm" | "satellite" | "hybrid" | "topo";
   onEndemicSpeciesChange?: (species: Species[]) => void;
-  highlightProvince?: string;
+  transparentHighlightProvince?: string;
+  whiteFillProvinces?: string[];
+  maskColor?: string;
 };
 
 const indonesiaBounds: LatLngBoundsExpression = [
@@ -133,24 +135,6 @@ const getClimateZoneStyleFromTropisArray = (provinceName: string) => {
   return { fillColor: "#97dbf2", color: "#003b79" }; // Default: Light Blue, Dark Blue border (matches old default)
 };
 
-/*
-// This is the old function that was based on ZONAKLIM property from GeoJSON.
-// It's being replaced by getClimateZoneStyleFromTropisArray, which uses imported arrays.
-const getClimateZoneColor = (climateZone?: string) => {
-  if (!climateZone) return "#97d2e3";
-  switch (climateZone.toLowerCase()) {
-    case "iklim tropis basah":
-      return "#4CAF50";
-    case "iklim tropis kering":
-      return "#FFC107";
-    case "iklim tropis musim":
-      return "#2196F3";
-    default:
-      return "#9E9E9E";
-  }
-};
-*/
-
 const MapContent: React.FC<MapContentProps> = ({
   showFlora = true,
   showFauna = true,
@@ -163,7 +147,9 @@ const MapContent: React.FC<MapContentProps> = ({
   defaultZoom = 4,
   defaultTileLayer = "osm",
   onEndemicSpeciesChange,
-  highlightProvince,
+  transparentHighlightProvince,
+  whiteFillProvinces,
+  maskColor = "#97d2e3",
 }) => {
   const [data, setData] = useState<ProvinceData[]>([]);
   const [selectedProvince, setSelectedProvince] = useState<ProvinceData | null>(
@@ -426,92 +412,138 @@ const MapContent: React.FC<MapContentProps> = ({
               </>
             )}
 
-            {/* Polygon Rendering Logic: Mask or Standard Provinces */}
+            {/* Polygon Rendering Logic */}
             {showPolygons &&
               indonesiaPolygon.length > 0 &&
-              highlightProvince &&
               (() => {
-                // Get ALL features that match the highlightProvince
-                const highlightedProvincesData = indonesiaPolygon.filter(
-                  (p) => p.province === highlightProvince
-                );
+                const hasTransparentHighlight = !!transparentHighlightProvince;
+                const hasWhiteFillProvinces =
+                  whiteFillProvinces && whiteFillProvinces.length > 0;
 
-                if (highlightedProvincesData.length === 0) return null;
-
-                const maskPositions: LatLngTuple[][] = [worldRectangle];
-                // For each feature/part of Kalimantan Timur, add its rings as holes
-                highlightedProvincesData.forEach((provincePart) => {
-                  provincePart.polygon.forEach((ring) => {
-                    maskPositions.push(ring);
-                  });
-                });
-
-                return (
-                  <>
-                    {/* Solid Mask covering the world, with holes for ALL Kaltim parts */}
-                    <Polygon
-                      positions={maskPositions}
-                      pathOptions={{
-                        fillColor: "#97d2e3",
-                        fillOpacity: 1, // Solid color
-                        color: "transparent",
-                        weight: 0,
-                        interactive: false,
-                      }}
-                    />
-                    {/* Render borders for ALL Kaltim parts on top of the mask's holes */}
-                    {highlightedProvincesData.map((provincePart, partIndex) => (
-                      <React.Fragment key={`highlight-part-${partIndex}`}>
-                        {provincePart.polygon.map((ring, ringIndex) => (
+                if (!hasTransparentHighlight && !hasWhiteFillProvinces) {
+                  // No highlighting, standard display with climate zones
+                  return indonesiaPolygon.map((provincePolygon, index) => (
+                    <React.Fragment
+                      key={`${provincePolygon.province}-${index}-fragment-default`}
+                    >
+                      {provincePolygon.polygon.map((ring, ringIndex) => {
+                        const style = getClimateZoneStyleFromTropisArray(
+                          provincePolygon.province
+                        );
+                        return (
                           <Polygon
-                            key={`highlight-${provincePart.province}-part-${partIndex}-ring-${ringIndex}`}
+                            key={`${provincePolygon.province}-${index}-ring-${ringIndex}-default`}
                             positions={ring}
                             pathOptions={{
-                              color: "#FFFFFF",
-                              fillColor: "transparent",
+                              color: style.color,
+                              fillColor: style.fillColor,
+                              fillOpacity: 0.9,
+                              weight: 1,
+                            }}
+                          >
+                            <Popup>
+                              <strong>{provincePolygon.province}</strong>
+                            </Popup>
+                          </Polygon>
+                        );
+                      })}
+                    </React.Fragment>
+                  ));
+                }
+
+                // --- Highlighting Logic ---
+                const elementsToRender = [];
+
+                // 1. Base Mask (with a hole for transparentHighlightProvince if set)
+                const transparentHoles: LatLngTuple[][] = [];
+                if (hasTransparentHighlight && transparentHighlightProvince) {
+                  const provinceParts = indonesiaPolygon.filter(
+                    (p) => p.province === transparentHighlightProvince
+                  );
+                  provinceParts.forEach((provinceData) => {
+                    if (provinceData && provinceData.polygon) {
+                      provinceData.polygon.forEach((ring) =>
+                        transparentHoles.push(ring)
+                      );
+                    }
+                  });
+                }
+
+                elementsToRender.push(
+                  <Polygon
+                    key="base-mask-highlighting"
+                    positions={[worldRectangle, ...transparentHoles]}
+                    pathOptions={{
+                      fillColor: maskColor,
+                      fillOpacity: 1,
+                      color: "transparent",
+                      weight: 0,
+                      interactive: false,
+                    }}
+                  />
+                );
+
+                // 2. Render transparentHighlightProvince (if set)
+                if (hasTransparentHighlight && transparentHighlightProvince) {
+                  const provinceParts = indonesiaPolygon.filter(
+                    (p) => p.province === transparentHighlightProvince
+                  );
+                  provinceParts.forEach((provinceData, partIndex) => {
+                    if (provinceData && provinceData.polygon) {
+                      provinceData.polygon.forEach((ring, ringIndex) => {
+                        elementsToRender.push(
+                          <Polygon
+                            key={`${provinceData.province}-transparent-part${partIndex}-ring-${ringIndex}`}
+                            positions={ring}
+                            pathOptions={{
+                              color: "transparent",
+                              weight: 1,
+                              opacity: 0,
+                              fillColor: "transparent", // Shows basemap
                               fillOpacity: 0,
-                              weight: 2,
                               interactive: false,
                             }}
                           />
-                        ))}
-                      </React.Fragment>
-                    ))}
-                  </>
-                );
-              })()}
+                        );
+                      });
+                    }
+                  });
+                }
 
-            {/* Standard display: all provinces with default fill when no highlight */}
-            {showPolygons &&
-              indonesiaPolygon.length > 0 &&
-              !highlightProvince &&
-              indonesiaPolygon.map((provincePolygon, index) => (
-                <React.Fragment
-                  key={`${provincePolygon.province}-${index}-fragment`}
-                >
-                  {provincePolygon.polygon.map((ring, ringIndex) => {
-                    const style = getClimateZoneStyleFromTropisArray(
-                      provincePolygon.province
+                // 3. Render whiteFillProvinces (if set)
+                if (hasWhiteFillProvinces) {
+                  whiteFillProvinces?.forEach((provinceName) => {
+                    const provinceParts = indonesiaPolygon.filter(
+                      (p) => p.province === provinceName
                     );
-                    return (
-                      <Polygon
-                        key={`${provincePolygon.province}-${index}-ring-${ringIndex}`}
-                        positions={ring}
-                        pathOptions={{
-                          color: style.color,
-                          fillColor: style.fillColor,
-                          fillOpacity: 0.9, // As per your example
-                          weight: 1,
-                        }}
-                      >
-                        <Popup>
-                          <strong>{provincePolygon.province}</strong>
-                        </Popup>
-                      </Polygon>
-                    );
-                  })}
-                </React.Fragment>
-              ))}
+                    provinceParts.forEach((provinceData, partIndex) => {
+                      if (provinceData && provinceData.polygon) {
+                        provinceData.polygon.forEach((ring, ringIndex) => {
+                          elementsToRender.push(
+                            <Polygon
+                              key={`${provinceData.province}-white-fill-part${partIndex}-ring-${ringIndex}`}
+                              positions={ring}
+                              pathOptions={{
+                                color: "#555555", // Dark grey border
+                                weight: 1.5,
+                                fillColor: "#FFFFFF", // White fill
+                                fillOpacity: 0.9,
+                                interactive: true,
+                              }}
+                            >
+                              <Popup>
+                                <strong>{provinceData.province}</strong>
+                              </Popup>
+                            </Polygon>
+                          );
+                        });
+                      }
+                    });
+                  });
+                }
+
+                return <>{elementsToRender}</>;
+              })()}
             {/* End of polygon rendering logic */}
           </LayersControl>
         </MapContainer>

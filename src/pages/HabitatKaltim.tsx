@@ -43,7 +43,14 @@ const HabitatKaltim = () => {
         defaultZoom={7} // Zoom to Kaltim
         defaultTileLayer="topo"
         onEndemicSpeciesChange={handleEndemicSpeciesChange}
-        highlightProvince="Kalimantan Timur"
+        transparentHighlightProvince="Kalimantan Timur"
+        whiteFillProvinces={[
+          "Kalimantan Barat",
+          "Kalimantan Selatan",
+          "Kalimantan Tengah",
+          "Kalimantan Utara",
+        ]}
+        maskColor="#97d2e3" // Explicitly set maskColor, or remove to use default from MapContent
       />
       {/* Download Link for PDF */}
       <div

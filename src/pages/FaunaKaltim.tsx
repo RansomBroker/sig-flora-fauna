@@ -44,7 +44,8 @@ const FaunaKaltim = () => {
         defaultLng={117.121587} // Kaltim center
         defaultZoom={7} // Zoom to Kaltim
         onEndemicSpeciesChange={handleEndemicSpeciesChange}
-        highlightProvince="Kalimantan Timur"
+        transparentHighlightProvince="Kalimantan Timur"
+        maskColor="#97d2e3"
       />
       <MapLegend
         title="Legenda Fauna Kaltim"
