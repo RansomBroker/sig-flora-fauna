@@ -10,6 +10,10 @@ import Flora from "./pages/Flora";
 import Fauna from "./pages/Fauna";
 import Habitat from "./pages/Habitat";
 import ZonaHabitat from "./pages/ZonaHabitat";
+import HabitatKaltim from "./pages/HabitatKaltim";
+import FloraKaltim from "./pages/FloraKaltim";
+import FaunaKaltim from "./pages/FaunaKaltim";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -25,6 +29,9 @@ const App = () => (
             <Route path="/fauna" element={<Fauna />} />
             <Route path="/habitat" element={<Habitat />} />
             <Route path="/zonahabitat" element={<ZonaHabitat />} />
+            <Route path="/habitat-kaltim" element={<HabitatKaltim />} />
+            <Route path="/flora-kaltim" element={<FloraKaltim />} />
+            <Route path="/fauna-kaltim" element={<FaunaKaltim />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>

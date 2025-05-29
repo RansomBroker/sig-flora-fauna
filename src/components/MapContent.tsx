@@ -10,15 +10,9 @@ import {
   Polyline,
   Polygon,
 } from "react-leaflet";
-import L from "leaflet";
+import L, { LatLngBoundsExpression, LatLngTuple } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { wallaceLine, webberLine } from "../lib/lineCoordinate";
-import {
-  tropisBasah,
-  tropisKering,
-  tropisSedang,
-  tropisPegunungan,
-} from "../lib/tropis";
 import { Species } from "@/types/species";
 
 type Representative = Species;
@@ -32,8 +26,28 @@ type ProvinceData = {
 
 type ProvincePolygon = {
   province: string;
-  polygon: [number, number][][];
+  polygon: LatLngTuple[][];
 };
+
+// Define types for GeoJSON structure
+interface Geometry {
+  type: "Polygon" | "MultiPolygon";
+  coordinates: [number, number][][] | [number, number][][][]; // More specific type for coordinates
+}
+
+interface GeoJsonFeature {
+  type: "Feature";
+  properties: {
+    PROVINSI: string;
+    // Add other properties if they exist and are used
+  };
+  geometry: Geometry;
+}
+
+interface GeoJsonResponse {
+  type: "FeatureCollection";
+  features: GeoJsonFeature[];
+}
 
 type MapContentProps = {
   showFlora?: boolean;
@@ -47,7 +61,21 @@ type MapContentProps = {
   defaultZoom?: number;
   defaultTileLayer?: "osm" | "satellite" | "hybrid" | "topo";
   onEndemicSpeciesChange?: (species: Species[]) => void;
+  highlightProvince?: string;
 };
+
+const indonesiaBounds: LatLngBoundsExpression = [
+  [-11.0, 95.0],
+  [6.0, 141.0],
+];
+
+// Define coordinates for a rectangle covering the world
+const worldRectangle: LatLngTuple[] = [
+  [-85, -180],
+  [85, -180],
+  [85, 180],
+  [-85, 180],
+];
 
 const icon = (url: string, isEndemic?: boolean, type?: "floral" | "fauna") =>
   L.icon({
@@ -92,6 +120,7 @@ const MapContent: React.FC<MapContentProps> = ({
   defaultZoom = 4,
   defaultTileLayer = "osm",
   onEndemicSpeciesChange,
+  highlightProvince,
 }) => {
   const [data, setData] = useState<ProvinceData[]>([]);
   const [selectedProvince, setSelectedProvince] = useState<ProvinceData | null>(
@@ -110,10 +139,9 @@ const MapContent: React.FC<MapContentProps> = ({
   useEffect(() => {
     fetch("/data/floraFaunaData.json")
       .then((response) => response.json())
-      .then((data) => {
-        setData(data);
-        // Extract endemic species and notify parent
-        const endemicSpecies = data.flatMap((province) => [
+      .then((jsonData: ProvinceData[]) => {
+        setData(jsonData);
+        const endemicSpecies = jsonData.flatMap((province) => [
           ...province.representatives
             .filter((rep) => rep.is_endemic)
             .map((rep) => ({
@@ -130,40 +158,46 @@ const MapContent: React.FC<MapContentProps> = ({
         onEndemicSpeciesChange?.(endemicSpecies);
       })
       .catch((err) => {
-        console.error("Fetch error:", err);
+        console.error("Fetch error (floraFaunaData):", err);
       });
   }, [onEndemicSpeciesChange]);
 
   useEffect(() => {
     fetch("/data/polygonIndonesia.geojson")
       .then((response) => response.json())
-      .then((data) => {
-        const polygons = data.features.map((feature) => {
-          let polygonCoordinates: [number, number][][] = [];
+      .then((geoJsonData: GeoJsonResponse) => {
+        const polygons = geoJsonData.features.map((feature) => {
+          let featurePolygonRings: LatLngTuple[][] = [];
 
           if (feature.geometry.type === "Polygon") {
-            polygonCoordinates = [
-              feature.geometry.coordinates.map((ring) =>
-                ring.map(([long, lat]) => [lat, long] as [number, number])
+            const coords = feature.geometry.coordinates as [number, number][][];
+            featurePolygonRings = [
+              coords[0].map(
+                ([long, lat]: [number, number]) => [lat, long] as LatLngTuple
               ),
             ];
           } else if (feature.geometry.type === "MultiPolygon") {
-            polygonCoordinates = feature.geometry.coordinates.map((polygon) =>
-              polygon.map((ring) =>
-                ring.map(([long, lat]) => [lat, long] as [number, number])
-              )
+            const coords = feature.geometry.coordinates as [
+              number,
+              number
+            ][][][];
+            featurePolygonRings = coords.map(
+              (polygonRings: [number, number][][]) =>
+                polygonRings[0].map(
+                  ([long, lat]: [number, number]) => [lat, long] as LatLngTuple
+                )
             );
           }
 
           return {
             province: feature.properties.PROVINSI,
-            polygon: polygonCoordinates,
+            polygon: featurePolygonRings,
           };
         });
         setIndonesiaPolygon(polygons);
       })
       .catch((err) => {
-        console.error("Fetch error:", err);
+        console.error("Fetch error (polygonIndonesia):", err);
       });
   }, []);
 
@@ -211,6 +245,7 @@ const MapContent: React.FC<MapContentProps> = ({
           zoom={defaultZoom}
           scrollWheelZoom={true}
           style={{ width, height }}
+          minZoom={2}
         >
           <MapEvents onZoomChange={setZoomLevel} />
 
@@ -347,46 +382,84 @@ const MapContent: React.FC<MapContentProps> = ({
               </>
             )}
 
+            {/* Polygon Rendering Logic: Mask or Standard Provinces */}
             {showPolygons &&
               indonesiaPolygon.length > 0 &&
-              indonesiaPolygon.map((provincePolygon, index) => (
-                <React.Fragment key={index}>
-                  {provincePolygon.polygon.map((polygon, polygonIndex) => (
+              highlightProvince &&
+              (() => {
+                // Get ALL features that match the highlightProvince
+                const highlightedProvincesData = indonesiaPolygon.filter(
+                  (p) => p.province === highlightProvince
+                );
+
+                if (highlightedProvincesData.length === 0) return null;
+
+                const maskPositions: LatLngTuple[][] = [worldRectangle];
+                // For each feature/part of Kalimantan Timur, add its rings as holes
+                highlightedProvincesData.forEach((provincePart) => {
+                  provincePart.polygon.forEach((ring) => {
+                    maskPositions.push(ring);
+                  });
+                });
+
+                return (
+                  <>
+                    {/* Solid Mask covering the world, with holes for ALL Kaltim parts */}
                     <Polygon
-                      key={`${index}-${polygonIndex}`}
-                      positions={polygon}
+                      positions={maskPositions}
                       pathOptions={{
-                        color: tropisBasah.includes(provincePolygon.province)
-                          ? "#003b79"
-                          : tropisKering.includes(provincePolygon.province)
-                          ? "#003b79"
-                          : tropisSedang.includes(provincePolygon.province)
-                          ? "#003b79"
-                          : tropisPegunungan.includes(provincePolygon.province)
-                          ? "#003b79"
-                          : "#003b79",
-                        fillColor: tropisBasah.includes(
-                          provincePolygon.province
-                        )
-                          ? "#73b273"
-                          : tropisKering.includes(provincePolygon.province)
-                          ? "#f6c567"
-                          : tropisSedang.includes(provincePolygon.province)
-                          ? "#aef1b0"
-                          : tropisPegunungan.includes(provincePolygon.province)
-                          ? "#97dbf2"
-                          : "#97dbf2",
-                        fillOpacity: 0.8,
+                        fillColor: "#97d2e3",
+                        fillOpacity: 1, // Solid color
+                        color: "transparent",
+                        weight: 0,
+                        interactive: false,
+                      }}
+                    />
+                    {/* Render borders for ALL Kaltim parts on top of the mask's holes */}
+                    {highlightedProvincesData.map((provincePart, partIndex) => (
+                      <React.Fragment key={`highlight-part-${partIndex}`}>
+                        {provincePart.polygon.map((ring, ringIndex) => (
+                          <Polygon
+                            key={`highlight-${provincePart.province}-part-${partIndex}-ring-${ringIndex}`}
+                            positions={ring}
+                            pathOptions={{
+                              color: "#FFFFFF",
+                              fillColor: "transparent",
+                              fillOpacity: 0,
+                              weight: 2,
+                              interactive: false,
+                            }}
+                          />
+                        ))}
+                      </React.Fragment>
+                    ))}
+                  </>
+                );
+              })()}
+
+            {/* Standard display: all provinces with default fill when no highlight */}
+            {showPolygons &&
+              indonesiaPolygon.length > 0 &&
+              !highlightProvince &&
+              indonesiaPolygon.map((provincePolygon, index) => (
+                <React.Fragment
+                  key={`${provincePolygon.province}-${index}-fragment`}
+                >
+                  {provincePolygon.polygon.map((ring, ringIndex) => (
+                    <Polygon
+                      key={`${provincePolygon.province}-${index}-ring-${ringIndex}`}
+                      positions={ring}
+                      pathOptions={{
+                        color: "#b0c4de",
+                        fillColor: "#97d2e3",
+                        fillOpacity: 1,
                         weight: 1,
                       }}
-                    >
-                      <Popup>
-                        <strong>{provincePolygon.province}</strong>
-                      </Popup>
-                    </Polygon>
+                    />
                   ))}
                 </React.Fragment>
               ))}
+            {/* End of polygon rendering logic */}
           </LayersControl>
         </MapContainer>
       )}
