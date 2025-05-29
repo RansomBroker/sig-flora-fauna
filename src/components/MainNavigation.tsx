@@ -81,6 +81,49 @@ const MainNavigation = () => {
               </a>
             </li>
           </ul>
+          <h3 className="text-lg font-semibold mt-4 mb-3">Peta</h3>
+          <ul className="list-disc list-inside space-y-2">
+            <li>
+              <a
+                href="/peta/Peta persebaran Flora Fauna Big 1.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                Peta persebaran Flora Fauna Big 1.pdf
+              </a>
+            </li>
+            <li>
+              <a
+                href="/peta/Peta Karakteristik Flora Fauna Berdasarkan Topografi (2).pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                Peta Karakteristik Flora Fauna Berdasarkan Topografi (2).pdf
+              </a>
+            </li>
+            <li>
+              <a
+                href="/peta/Peta Karakteristik Flora Fauna Berdasarkan Iklim (3).pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                Peta Karakteristik Flora Fauna Berdasarkan Iklim (3).pdf
+              </a>
+            </li>
+            <li>
+              <a
+                href="/peta/Peta Flora dan Fauna di Kalimantan Timur (2).pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                Peta Flora dan Fauna di Kalimantan Timur (2).pdf
+              </a>
+            </li>
+          </ul>
         </div>
       )}
     </div>
