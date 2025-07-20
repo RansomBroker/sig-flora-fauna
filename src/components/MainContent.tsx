@@ -16,7 +16,7 @@ const MainContent: React.FC = () => {
           showLines={false}
           showPolygons={false}
           width="100%"
-          height="500px"
+          height="700px"
         />
       </div>
 

@@ -6,4 +6,6 @@ export type Species = {
   image?: string;
   lat?: number;
   lng?: number;
+  description?: string;
+  habitat?: string;
 };

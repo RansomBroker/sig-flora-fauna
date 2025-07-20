@@ -337,6 +337,14 @@ const MapContent: React.FC<MapContentProps> = ({
                           Provinsi: {prov.province}
                           <br />
                           Tipe: {item.type}
+                          <br />
+                          Habitat: {item.description && item.description.trim() !== "" ? item.description : "-"}
+                          {item.habitat && item.habitat.trim() !== "" && (
+                            <>
+                              <br />
+                              Lokasi: {item.habitat}
+                            </>
+                          )}
                           {item.is_endemic && <br />}
                           {item.is_endemic && (
                             <span className="text-red-500">Endemik</span>
@@ -361,6 +369,14 @@ const MapContent: React.FC<MapContentProps> = ({
                           <strong>{rep.name}</strong>
                           <br />
                           Provinsi: {prov.province}
+                          <br />
+                          Habitat: {rep.description && rep.description.trim() !== "" ? rep.description : "-"}
+                          {rep.habitat && rep.habitat.trim() !== "" && (
+                            <>
+                              <br />
+                              Lokasi: {rep.habitat}
+                            </>
+                          )}
                           {rep.is_endemic && <br />}
                           {rep.is_endemic && (
                             <span className="text-red-500">Endemik</span>
@@ -383,6 +399,14 @@ const MapContent: React.FC<MapContentProps> = ({
                       <strong>{item.name}</strong>
                       <br />
                       Tipe: {item.type}
+                      <br />
+                      Habitat: {item.description && item.description.trim() !== "" ? item.description : "-"}
+                      {item.habitat && item.habitat.trim() !== "" && (
+                        <>
+                          <br />
+                          Lokasi: {item.habitat}
+                        </>
+                      )}
                       {item.is_endemic && <br />}
                       {item.is_endemic && (
                         <span className="text-red-500">Endemik</span>

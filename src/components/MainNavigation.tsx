@@ -49,12 +49,32 @@ const MainNavigation = () => {
           <ul className="list-disc list-inside space-y-2">
             <li>
               <a
-                href="/materi/MATERI FLORA DAN FAUNA INDONESIA.pdf"
+                href="/materi/Materi FLORA DAN FAUNA INDONESIA.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary hover:underline"
               >
-                MATERI FLORA DAN FAUNA INDONESIA.pdf
+                Materi FLORA DAN FAUNA INDONESIA.pdf
+              </a>
+            </li>
+            <li>
+              <a
+                href="/materi/soal pretest.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                Soal Pretest.pdf
+              </a>
+            </li>
+            <li>
+              <a
+                href="/materi/soal posttest.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                Soal Posttest.pdf
               </a>
             </li>
           </ul>
